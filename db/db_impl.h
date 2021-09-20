@@ -26,6 +26,8 @@ class Version;
 class VersionEdit;
 class VersionSet;
 
+ // 这里定义了LevelDB数据库的抽象结构体DBImpl，
+ // 它继承自DB，DB是其友元（line75）可以访问DBImpl中的私有成员和保护成员
 class DBImpl : public DB {
  public:
   DBImpl(const Options& options, const std::string& dbname);
