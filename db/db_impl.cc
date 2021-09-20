@@ -1480,6 +1480,9 @@ Status DB::Delete(const WriteOptions& opt, const Slice& key) {
 
 DB::~DB() = default;
 
+  
+// 这里是leveldb打开数据库的入口
+// e.g. leveldb::Status status = leveldb::DB::Open(options,"tzh_db", &db);
 Status DB::Open(const Options& options, const std::string& dbname, DB** dbptr) {
   *dbptr = nullptr;
 
