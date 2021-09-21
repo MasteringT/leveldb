@@ -243,6 +243,8 @@ int SkipList<Key, Comparator>::RandomHeight() {
   // Increase height with probability 1 in kBranching
   static const unsigned int kBranching = 4;
   int height = 1;
+  // 当随机到的数字不是kBranching的倍数或者height已经等于kMaxHeight的时候，height停止增长
+  // 因此有1/kBranch的概率节点在第二层，有1/(kBranch*kBranch)的概率节点在第三层，依此类推
   while (height < kMaxHeight && ((rnd_.Next() % kBranching) == 0)) {
     height++;
   }
@@ -254,6 +256,7 @@ int SkipList<Key, Comparator>::RandomHeight() {
 template <typename Key, class Comparator>
 bool SkipList<Key, Comparator>::KeyIsAfterNode(const Key& key, Node* n) const {
   // null n is considered infinite
+  // key更大的在后面，从小到大排列
   return (n != nullptr) && (compare_(n->key, key) < 0);
 }
 
