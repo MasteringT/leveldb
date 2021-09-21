@@ -175,12 +175,15 @@ struct SkipList<Key, Comparator>::Node {
 
  private:
   // Array of length equal to the node height.  next_[0] is lowest level link.
+  // next_数组存储了各层的后继节点，next_数组的长度取决于生成节点时跳表的高度height.
+  // 私有成员next_[1]是用Node*数组来代替Node**，实际上就是个指针。
   std::atomic<Node*> next_[1];
 };
 
 template <typename Key, class Comparator>
 typename SkipList<Key, Comparator>::Node* SkipList<Key, Comparator>::NewNode(
     const Key& key, int height) {
+ // 声明新的node的时候，给出的空间是一个node加一个next_数组大小，Node类中成员的排列是连续的。
   char* const node_memory = arena_->AllocateAligned(
       sizeof(Node) + sizeof(std::atomic<Node*>) * (height - 1));
   return new (node_memory) Node(key);
